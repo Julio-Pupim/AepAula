@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-public class AbstractResource<Entity extends AbstractEntity,Repository extends AbstractRepository<Entity>,
+public abstract class AbstractResource<Entity extends AbstractEntity,Repository extends AbstractRepository<Entity>,
                               Service extends AbstractService<Entity,Repository>>{
 
   private final Service service;
@@ -31,7 +31,7 @@ public class AbstractResource<Entity extends AbstractEntity,Repository extends A
     return ResponseEntity.badRequest().build();
   }
 
-  @GetMapping
+  @GetMapping("/{id}")
   public ResponseEntity<Entity> findById(@PathVariable Long id){
     Entity result = service.findById(id);
     if(Objects.nonNull(result)){
@@ -45,7 +45,7 @@ public class AbstractResource<Entity extends AbstractEntity,Repository extends A
     return ResponseEntity.ok(service.getAll());
   }
 
-  @PutMapping
+  @PutMapping("/{id}")
   public ResponseEntity<Entity> upadte(@RequestBody Entity atualizado, @PathVariable Long id ){
     Entity resultUpdate = service.update(id, atualizado);
     if(Objects.nonNull(resultUpdate)){
@@ -54,8 +54,8 @@ public class AbstractResource<Entity extends AbstractEntity,Repository extends A
     return ResponseEntity.notFound().build();
   }
 
-  @DeleteMapping
-  public ResponseEntity<?> deleteById(@PathVariable long id){
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteById(@PathVariable Long id){
     service.deleteById(id);
     return ResponseEntity.ok().build();
 

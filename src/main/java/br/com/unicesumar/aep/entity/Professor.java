@@ -1,7 +1,10 @@
 package br.com.unicesumar.aep.entity;
 
 import br.com.unicesumar.aep.abstractcrud.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -11,12 +14,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "professor")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Professor extends AbstractEntity {
 
     private String nome;
     private String materia;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("professor")
     private List<Aula> aulas;
 

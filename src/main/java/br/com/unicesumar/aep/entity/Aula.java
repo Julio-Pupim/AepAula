@@ -1,6 +1,7 @@
 package br.com.unicesumar.aep.entity;
 
 import br.com.unicesumar.aep.abstractcrud.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
-
 @Entity
 @Table(name="aula")
 public class Aula extends AbstractEntity {
@@ -21,6 +21,7 @@ public class Aula extends AbstractEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="professor_id")
+  @JsonIdentityReference(alwaysAsId = true)
   @JsonIgnoreProperties("aulas")
   private Professor professor;
 

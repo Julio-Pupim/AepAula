@@ -12,4 +12,11 @@ public class ProfessorService extends AbstractService<Professor, ProfessorReposi
   public ProfessorService(ProfessorRepository repository, EntityManager em) {
     super(repository, em);
   }
+
+  @Override
+  public Professor save (Professor professor){
+    professor.getAulas().forEach(aula -> aula.setProfessor(professor));
+    return super.save(professor);
+  }
+
 }
